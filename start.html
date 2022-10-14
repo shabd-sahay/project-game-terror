@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+        <meta name="viewport" content="width=device-width", initial-scale="1.0" />
+        <title>JavaScript Shooting Game</title>
+        <link rel="stylesheet" href="./start.css">
+    </head>
+    <body>
+        <div class="container">
+            <a href="./game.html">START</a>
+        </div>
+        <script>
+            const container =document.querySelector(".container");
+            //
+            const terrorist = document.createElement("img");
+            terrorist.setAttribute("class", "terrorist");
+            terrorist.setAttribute("src", "terrorist.png");
+            const civilian = document.createElement("img");
+            civilian.setAttribute("class", "civilian");
+            civilian.setAttribute("src", "civilian.png");
+            const bandit = document.createElement("img");
+            bandit.setAttribute("class", "bandit");
+            bandit.setAttribute("src", "bandit.png");
+            const bomb = document.createElement("img");
+            bomb.setAttribute("class", "bomb");
+            bomb.setAttribute("src", "bomb.png");
+            const dynamite = document.createElement("img");
+            dynamite.setAttribute("class", "dynamite");
+            dynamite.setAttribute("src", "dynamite.png");
+        
+
+            const contHeight = container.offsetHeight;
+            const contWidth = container.offsetWidth;
+
+            let score = 0;
+            var back = new Audio("backgroundmusic.mp3");
+            setInterval(()=> {
+                const randTop = Math.random() * (contHeight - 100);
+                const randLeft = Math.random() * (contWidth - 100);
+                const randTop1 = Math.random() * (contHeight - 100);
+                const randLeft1 = Math.random() * (contWidth - 100);
+                const randTop2 = Math.random() * (contHeight - 100);
+                const randLeft2 = Math.random() * (contWidth - 100);
+                const randTop3 = Math.random() * (contHeight - 100);
+                const randLeft3 = Math.random() * (contWidth - 100);
+                const randTop4 = Math.random() * (contHeight - 100);
+                const randLeft4 = Math.random() * (contWidth - 100);
+
+                terrorist.style.position = "absolute";
+                terrorist.style.top = randTop + "px";
+                terrorist.style.left = randLeft + "px";
+                civilian.style.position = "absolute";
+                civilian.style.top = randTop1 + "px";
+                civilian.style.left = randLeft1 + "px";
+                bandit.style.position = "absolute";
+                bandit.style.top = randTop2 + "px";
+                bandit.style.left = randLeft2 + "px";
+                bomb.style.position = "absolute";
+                bomb.style.top = randTop3 + "px";
+                bomb.style.left = randLeft3 + "px";
+                dynamite.style.position = "absolute";
+                dynamite.style.top = randTop4 + "px";
+                dynamite.style.left = randLeft4 + "px";
+            }, 1000);
+
+            container.appendChild(terrorist);
+            container.appendChild(bandit);
+            container.appendChild(bomb);
+            container.appendChild(dynamite);
+            container.appendChild(civilian);
+            container.onclick =function(){ back.play();}
+            
+            
+        </script>
+    </body>

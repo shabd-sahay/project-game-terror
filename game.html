@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+        <meta name="viewport" content="width=device-width", initial-scale="1.0" />
+        <title>JavaScript Shooting Game</title>
+        <link rel="stylesheet" href="./game.css">
+        <script src="./game.js"></script>
+    </head>
+    <body>
+        <div class="container">
+
+            <table>
+                <tr>
+                    <td><button type="button" onclick="func()" class="logout"><img src="./logout.png" alt="logout" class="end"></button></td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="lives">FULL LIVES</button>></td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="score"></button></td>
+                </tr>
+            </table>
+            
+            <img src="./cursor.png" alt="Crosshair" class="cursor" />
+            <img src="./blood.png" alt="Blood Spot" class="bloodSpot" />
+        </div>
+
+        <script>
+            const container =document.querySelector(".container");
+            const bloodSpot = document.querySelector(".bloodSpot");
+            const scoreBtn = document.querySelector(".score");
+            const LIVES = document.querySelector(".lives");
+            const pauseButton = document.querySelector(".PAUSE");
+
+
+            const terrorist = document.createElement("img");
+            terrorist.setAttribute("class", "terrorist");
+            terrorist.setAttribute("src", "terrorist.png");
+            const civilian = document.createElement("img");
+            civilian.setAttribute("class", "civilian");
+            civilian.setAttribute("src", "civilian.png");
+            const bandit = document.createElement("img");
+            bandit.setAttribute("class", "bandit");
+            bandit.setAttribute("src", "bandit.png");
+            const bomb = document.createElement("img");
+            bomb.setAttribute("class", "bomb");
+            bomb.setAttribute("src", "bomb.png");
+            const dynamite = document.createElement("img");
+            dynamite.setAttribute("class", "dynamite");
+            dynamite.setAttribute("src", "dynamite.png");
+        
+
+            const contHeight = container.offsetHeight;
+            const contWidth = container.offsetWidth;
+
+            let score = 0;
+
+            setInterval(()=> {
+                const randTop = Math.random() * (contHeight - 100);
+                const randLeft = Math.random() * (contWidth - 100);
+                const randTop1 = Math.random() * (contHeight - 100);
+                const randLeft1 = Math.random() * (contWidth - 100);
+                const randTop2 = Math.random() * (contHeight - 100);
+                const randLeft2 = Math.random() * (contWidth - 100);
+                const randTop3 = Math.random() * (contHeight - 100);
+                const randLeft3 = Math.random() * (contWidth - 100);
+                const randTop4 = Math.random() * (contHeight - 100);
+                const randLeft4 = Math.random() * (contWidth - 100);
+
+                terrorist.style.position = "absolute";
+                terrorist.style.top = randTop + "px";
+                terrorist.style.left = randLeft + "px";
+                civilian.style.position = "absolute";
+                civilian.style.top = randTop1 + "px";
+                civilian.style.left = randLeft1 + "px";
+                bandit.style.position = "absolute";
+                bandit.style.top = randTop2 + "px";
+                bandit.style.left = randLeft2 + "px";
+                bomb.style.position = "absolute";
+                bomb.style.top = randTop3 + "px";
+                bomb.style.left = randLeft3 + "px";
+                dynamite.style.position = "absolute";
+                dynamite.style.top = randTop4 + "px";
+                dynamite.style.left = randLeft4 + "px";
+            }, 1000);
+
+            container.appendChild(terrorist);
+            scoreBtn.innerText = "SCORE: " + score;
+            let a=5;
+            let reduce=0
+            function exit(a,score,reduce){
+                container.innerText = "\n"+"\t \tGAME OVER" + "\n \n \n" + "SCORE" + "\t \t" + ":" + "\t \t" + score + "\n \n" + "REMAINING LIVES" + "\t \t" + ":" + "\t \t" + a + "\n \n" + "WRONG-SHOT" + "\t \t" + ":" + "\t \t" + reduce; 
+                container.style.cssText ="margin-left: 40%; display: block; position: absolute; font-size: 300%; color: #380906; height: 100vh; cursor: default; width: 60%";
+                //text.style = "height: 140px";
+                //container.style= "font-weight: 100px"
+                //container.style = "color: blue";}
+            }
+
+            window.addEventListener("click", (e) => {
+                bloodSpot.style.top = e.pageY + "px";
+                bloodSpot.style.left = e.pageX + "px";
+                
+                if (score<5){
+
+                    if (e.target === terrorist) score++;
+
+                    scoreBtn.innerText = "LEVEL:1 SCORE: " + score;
+                }
+
+
+                 if (score>=5 && score<10)
+                 {
+                    container.appendChild(bandit);
+                    
+                    
+
+                    if (e.target === terrorist || e.target === bandit){
+                        score++;
+                        scoreBtn.innerText = "LEVEL:2 SCORE: " + score;
+                    }
+                        
+                    else if (e.target !== terrorist) {
+                        score--;
+                        reduce++;
+                        scoreBtn.innerText = "LEVEL:2 SCORE: " + score;
+                    }
+                }
+
+                 if(score>=10 && score<15)
+                 {
+                    container.appendChild(dynamite);
+
+                    if (e.target === terrorist || e.target === bandit){
+                        score++;
+                        scoreBtn.innerText = "LEVEL:3 SCORE: " + score;
+                    }
+                    else if (e.target !== terrorist || e.target === dynamite) {
+                        score--;
+                        reduce++;
+                        scoreBtn.innerText = "LEVEL:3 SCORE: " + score;
+                    }
+                
+
+                }
+
+                else if(score>=15 && score<20){
+                    container.appendChild(bomb);
+                    if (e.target === terrorist || e.target === bandit){
+                        score++;
+                        scoreBtn.innerText = "LEVEL:4 SCORE: " + score;
+                    }
+                    else if (e.target !== terrorist || e.target === dynamite || e.target === bomb) {
+                        score--;
+                        reduce++;
+                        scoreBtn.innerText = "LEVEL:4 SCORE: " + score;
+                    }
+                }
+
+                else if(score>=20){
+                    container.appendChild(civilian);
+                    if (e.target === terrorist || e.target === bandit){
+                        score++;
+                        scoreBtn.innerText = "LEVEL:5 SCORE: " + score;
+                    }
+                    else if (e.target !== terrorist || e.target === dynamite || e.target === bomb) {
+                        score--;
+                        reduce++;
+                        scoreBtn.innerText = "LEVEL:5 SCORE: " + score;
+                    } 
+                }
+                
+                
+                    
+                    if(e.target !== terrorist && e.target !== bandit && e.target!==dynamite && e.target !== bomb){
+                        a-=1;
+                        reduce++;
+                        LIVES.innerText = "LIVES: " + a;
+                        if(a===0){
+                            exit(a,score,reduce);
+                        }
+                    }   
+
+
+            });
+            var civi = new Audio("civicry.wav");
+            civilian.onclick= function(){
+                civi.play();
+                exit(a,score,reduce);
+                container.removeChild(civilian);
+            }
+            const cursor = document.querySelector(".cursor");
+            window.addEventListener("mousemove", (e) => {
+                cursor.style.top = e.pageY + "px";
+                cursor.style.left = e.pageX + "px";
+            });
+            
+            function func() {
+                exit(a,score,reduce);
+            }
+
+            var dy = new Audio("dynaexpo.wav");
+            dynamite.onclick= function(){
+                dy.play();
+            }
+            var bo = new Audio("bombexpo.mp3");
+            bomb.onclick= function(){
+                bo.play();
+            }
+ 
+            var terr = new Audio("terrordead.mp3");
+
+            bandit.onclick= function(){
+                terr.play();
+            }
+            
+            terrorist.onclick= function(){
+                
+                terr.play();
+            }
+
+            var audio = new Audio("gunshot.mp3");
+
+            document.onclick = function(){
+                
+                audio.play();
+            }
+
+            
+
+        </script>
+    </body>
+</html>
